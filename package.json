@@ -1,0 +1,21 @@
+{
+  "name": "devnetcreate-bot",
+  "version": "0.1.0",
+  "description": "Cisco Spark Bots built with the BotKit framework",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ciscospark",
+    "botkit",
+    "devnet"
+  ],
+  "author": "Stève Sfartz (Cisco DevNet) <stsfartz@cisco.com>",
+  "license": "MIT",
+  "dependencies": {
+    "botkit": "^0.5.3",
+    "debug": "^2.3.2",
+    "node-env-file": "^0.1.8"
+  }
+}
