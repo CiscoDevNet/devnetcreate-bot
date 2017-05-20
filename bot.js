@@ -62,3 +62,13 @@ require("fs").readdirSync(normalizedPath).forEach(function (file) {
         }
     }
 });
+
+// Add Cisco Spark specific Group room mention
+bot.enrichCommand = function(message, command)  {
+    if (message.original_message.roomType == "group") {
+        return "`@devnetcreate " + command + "`";
+    }
+
+    return "`" + command + "`";
+}
+
