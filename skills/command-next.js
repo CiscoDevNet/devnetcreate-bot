@@ -8,7 +8,7 @@ module.exports = function (controller) {
         bot.reply(message, "_heard you! let's check what's coming..._");
 
         var limit = parseInt(message.match[1]);
-        if (!limit) limit = 10;
+        if (!limit) limit = 9;
         if (limit < 1) limit = 1;
 
         fetchNext(limit, function (err, activities, text) {
