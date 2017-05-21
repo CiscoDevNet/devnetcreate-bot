@@ -45,11 +45,14 @@ function chooseAmongActivities(bot, controller, message) {
         for (var i = 0; i < activities.length; i++) {
             var current = activities[i];
             choices += "<br/>`" + (i + 1) + ")` ";
-            choices += current.begin + " - " + current.end + ": " + current.title + " (" + current.location + ")";
-        }
+            choices += current.begin + " \> " + current.end + ": **" + current.title + "**";
+            if (current.category != "others") {
+                choices += " | _" + current.location + "_";
+            }        }
 
+        var ask = "Type a number or " + bot.enrichCommand(message, "cancel") + ". For example: " + bot.enrichCommand(message, "1");
         bot.startConversation(message, function (err, convo) {
-            convo.ask("Which activity are you inquiring about? (type a number or cancel)" + choices, [
+            convo.ask("Which activity are you inquiring about?" + choices + "\n\n" + ask, [
                 {
                     pattern: "cancel",
                     callback: function (response, convo) {
@@ -135,8 +138,8 @@ function showDetails(activity) {
     // 1st line
     var md = "**" + activity.title + "**";
     // 2nd line
-    var json_link = "([json](https://devnetcreate-api.herokuapp.com/api/v1/activities/" + activity.id + "))";
-    md += "<br/>" + activity.fullDay + " from " + activity.begin + " till " + activity.end + " - " + activity.location + " " + json_link;
+    var json_link = "[json](https://devnetcreate-api.herokuapp.com/api/v1/activities/" + activity.id + ")";
+    md += "<br/>" + activity.fullDay + " from " + activity.begin + " till " + activity.end + " | " + activity.location + " \[" + json_link + "\]";
     // 3rd line
     md += "<br/>_by " + activity.speaker + "_";
     // 4th and after...

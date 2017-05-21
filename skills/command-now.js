@@ -91,7 +91,10 @@ function fetchCurrent(cb) {
             var current = activities[i];
             //msg += "\n:small_blue_diamond: "
             msg += "<br/> `" + (i + 1) + ")` ";
-            msg += current.begin + " - " + current.end + ": " + current.title + " (" + current.location + ")";
+            msg += current.begin + " \> " + current.end + ": **" + current.title + "**";
+            if (current.category != "others") {
+                msg += " | _" + current.location + "_";
+            }
         }
 
         cb(null, activities, msg);

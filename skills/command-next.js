@@ -25,7 +25,7 @@ module.exports = function (controller) {
                     return;
                 }
 
-                bot.reply(message, text + "\n\nType " + bot.enrichCommand(message, "about [number]") + " for more details");
+                bot.reply(message, text + "\n\nType " + bot.enrichCommand(message, "about [number]") + " for more details. For example: " + bot.enrichCommand(message, "about 1"));
             });
         });
     });
@@ -85,12 +85,15 @@ function fetchNext(limit, cb) {
         }
 
         var nb = activities.length;
-        var msg = "**Upcoming activities at DevNet Create:**\n";
+        var msg = "Here are the next " + nb + " activities:\n";
         for (var i = 0; i < nb; i++) {
             var current = activities[i];
             //msg += "\n:small_blue_diamond: "
             msg += "<br/> `" + (i+1) + ")` ";
-            msg += current.begin + " - " + current.end + ": " + current.title + " (" + current.location + ")";
+            msg += current.begin + " \> " + current.end + ": **" + current.title + "**";
+            if (current.category != "others") {
+                msg += " | _" + current.location + "_";
+            }
         }
 
         cb(null, activities, msg);
