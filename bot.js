@@ -46,6 +46,19 @@ controller.setupWebserver(process.env.PORT || 3000, function (err, webserver) {
     controller.createWebhookEndpoints(webserver, bot, function () {
         console.log("SPARK: Webhooks set up!");
     });
+
+    // installing Healthcheck
+    var uptime = Date.now();
+    var version = require("./package.json").version;
+    bot.commons = {};
+    bot.commons["healthcheck"] = "https://devnetcreate-bot.herokuapp.com/ping";
+    bot.commons["owner"] = "Cisco DevNet <https://developer.cisco.com>";
+    bot.commons["support"] = "Stève Sfartz <mailto:stsfartz@cisco.com>";
+    bot.commons["up-since"] = new Date(uptime).toGMTString();
+    bot.commons["version"] = "v" + version;
+    webserver.get('/ping', function (req, res) {
+        res.json(bot.commons);
+    });
 });
 
 // Load skills
@@ -64,7 +77,7 @@ require("fs").readdirSync(normalizedPath).forEach(function (file) {
 });
 
 // Add Cisco Spark specific Group room mention
-bot.enrichCommand = function(message, command)  {
+bot.enrichCommand = function (message, command) {
     if (message.original_message.roomType == "group") {
         return "`@devnetcreate " + command + "`";
     }

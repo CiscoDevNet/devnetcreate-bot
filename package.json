@@ -1,6 +1,6 @@
 {
   "name": "devnetcreate-bot",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Cisco Spark Bots built with the BotKit framework",
   "main": "bot.js",
   "scripts": {
