@@ -56,6 +56,7 @@ controller.setupWebserver(process.env.PORT || 3000, function (err, webserver) {
     bot.commons["support"] = "Stève Sfartz <mailto:stsfartz@cisco.com>";
     bot.commons["up-since"] = new Date(uptime).toGMTString();
     bot.commons["version"] = "v" + version;
+    bot.commons["code"] = "https://github.com/CiscoDevNet/devnetcreate-bot";
     webserver.get('/ping', function (req, res) {
         res.json(bot.commons);
     });
