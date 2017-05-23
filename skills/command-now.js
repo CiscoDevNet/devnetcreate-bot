@@ -60,7 +60,7 @@ function fetchCurrent(cb) {
     // Get list of current activities
     var options = {
         method: 'GET',
-        url: "https://devnet-events-api.herokuapp.com/api/v1/events/current"
+        url: "https://devnetcreate-api.herokuapp.com/api/v1/activities/current"
     };
 
     request(options, function (error, response, body) {
@@ -89,9 +89,17 @@ function fetchCurrent(cb) {
         var msg = "**Activities happening now:**";
         for (var i = 0; i < nb; i++) {
             var current = activities[i];
+            
+            // Turned from Slack to Cisco Spark formatting
             //msg += "\n:small_blue_diamond: "
-            msg += "<br/> `" + (i + 1) + ")` ";
-            msg += current.begin + " \> " + current.end + ": **" + current.title + "**";
+            msg += "<br/> `" + (i+1) + ")` ";
+
+            // Do not emphasize workshops
+            var boldish = "**";
+            if (current.category == "workshop") {
+                boldish = "";
+            }
+            msg += current.begin + " \> " + current.end + ": " + boldish + current.title + boldish;
             if (current.category != "others") {
                 msg += " | _" + current.location + "_";
             }
