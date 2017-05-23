@@ -88,9 +88,17 @@ function fetchNext(limit, cb) {
         var msg = "Here are the next " + nb + " activities:\n";
         for (var i = 0; i < nb; i++) {
             var current = activities[i];
+            
+            // Turned from Slack to Cisco Spark formatting
             //msg += "\n:small_blue_diamond: "
             msg += "<br/> `" + (i+1) + ")` ";
-            msg += current.begin + " \> " + current.end + ": **" + current.title + "**";
+
+            // Do not emphasize workshops
+            var boldish = "**";
+            if (current.category == "workshop") {
+                boldish = "";
+            }
+            msg += current.begin + " \> " + current.end + ": " + boldish + current.title + boldish;
             if (current.category != "others") {
                 msg += " | _" + current.location + "_";
             }
