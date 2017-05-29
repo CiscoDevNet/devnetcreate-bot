@@ -3,10 +3,18 @@
 //
 module.exports = function (controller) {
 
-    controller.hears(['next\s*(.*)', 'upcoming\s*(.*)'], 'direct_message,direct_mention,mention', function (bot, message) {
+    controller.hears(['^next\s*(.*)', '^upcoming\s*(.*)'], 'direct_message,direct_mention,mention', function (bot, message) {
 
+        // Check conference is not over
+        var now = Date.now();
+        var ends = new Date("2017-05-25T01:00:00.000Z").valueOf(); // May 24th 6PM PFT
+        if ((now - ends) > 0) {
+            bot.reply(message, "**DevNetCreate 2017 is now over!**\n\nCheck the [videos](https://devnetcreate.io/2017/pages/livestream/livestream.html) and [Twitter](https://twitter.com/DevNetCreate) for latest info");
+            return;
+        }
+        
+        // Let's look for upcoming activities
         bot.reply(message, "_heard you! let's check what's coming..._");
-
         var limit = parseInt(message.match[1]);
         if (!limit) limit = 9;
         if (limit < 1) limit = 1;
@@ -22,6 +30,11 @@ module.exports = function (controller) {
             controller.storage.users.save(toPersist, function (err, id) {
                 if (err) {
                     bot.reply(message, text + "\n\nI am not feeling well, please retry later...");
+                    return;
+                }
+
+                if (activities.length === 0) {
+                    bot.reply(message, text);
                     return;
                 }
 
